@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.0.1](https://github.com/hedgieinsocks/rt-test/compare/v1.0.0...v1.0.1) (2025-07-04)
+
+
+### Bug Fixes
+
+* issue 3 ([131d929](https://github.com/hedgieinsocks/rt-test/commit/131d9292ce79417551b71889be562e83b4a7282b))
+
 ## 1.0.0 (2025-07-04)
 
 
