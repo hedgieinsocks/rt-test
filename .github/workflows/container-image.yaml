@@ -1,0 +1,47 @@
+name: "Build Container Image"
+on:
+  push:
+    branches:
+      - main
+    paths:
+      # build a semver tagged image after release-please pr merge
+      - CHANGELOG.md
+      # build a snapshot tagged image after any app change
+      - main.go
+      - config.go
+      - go.sum
+      - go.mod
+      - internal/*
+      - example/Dockerfile
+      - example/coraza-spoa.yaml
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Check out code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4
+
+      - name: Get changed files
+        id: changed-files
+        uses: tj-actions/changed-files@ed68ef82c095e0d48ec87eccea555d944a631a4c # v46
+
+      - name: Get the tag from the new release
+        id: get-tag
+        if: contains(steps.changed-files.outputs.modified_files, 'CHANGELOG.md')
+        run: |
+          echo tag=$(grep --color=never --perl-regex --only-matching --max-count=1 '^## \[\K[^\]]+' CHANGELOG.md) >> $GITHUB_OUTPUT
+
+      - name: Docker metadata
+        id: meta-main
+        uses: docker/metadata-action@902fa8ec7d6ecbf8d84d538b9b233a880e428804 # v5
+        with:
+          images: ghcr.io/${{ github.repository }}
+          tags: |
+            type=raw,value=snapshot,enable=${{ steps.get-tag.outputs.tag == '' }}
+            type=raw,value=${{ steps.get-tag.outputs.tag }},enable=${{ steps.get-tag.outputs.tag != '' }}
