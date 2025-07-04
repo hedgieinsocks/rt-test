@@ -35,7 +35,7 @@ jobs:
         id: get-tag
         if: contains(steps.changed-files.outputs.modified_files, 'CHANGELOG.md')
         run: |
-          echo tag=$(grep --color=never --perl-regex --only-matching --max-count=1 '^## \[\K[^\]]+' CHANGELOG.md) >> $GITHUB_OUTPUT
+          echo tag=$(grep --color=never --perl-regex --only-matching --max-count=1 '^## \[?\K[^\]\s]+' CHANGELOG.md) >> $GITHUB_OUTPUT
 
       - name: Docker metadata
         id: meta-main
