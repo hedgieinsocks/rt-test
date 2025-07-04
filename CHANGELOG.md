@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.1.0](https://github.com/hedgieinsocks/rt-test/compare/v1.0.1...v1.1.0) (2025-07-04)
+
+
+### Features
+
+* add main.go ([e23999c](https://github.com/hedgieinsocks/rt-test/commit/e23999c8342e4c2783d578f8ab56a1f972072ddb))
+
 ## [1.0.1](https://github.com/hedgieinsocks/rt-test/compare/v1.0.0...v1.0.1) (2025-07-04)
 
 
